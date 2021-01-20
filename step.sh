@@ -45,13 +45,13 @@ if [[ ${check_ios} == "yes" ]]; then
         echo "ERROR: Didn't find any ios app name ios_app_name: $ios_app_name"
         exit 1
     fi
-    if [ ! -d "ios_unzipped" ]; then
+    if [ ! -d "ipa_unzipped" ]; then
         echo "ERROR: Cannot find any decompiled apk"
         exit 1
     fi
 
     # PERMISSION CHECK - count permissions which are into current info.plist
-    CURRENT_IOS_BUILDS_PERMISSIONS_COUNT=$(grep -o -i "UsageDescription</key>" ios_unzipped/Payload/$ios_app_name.app/Info.plist | wc -l)
+    CURRENT_IOS_BUILDS_PERMISSIONS_COUNT=$(grep -o -i "UsageDescription</key>" ipa_unzipped/Payload/$ios_app_name.app/Info.plist | wc -l)
     if [ $CURRENT_IOS_BUILDS_PERMISSIONS_COUNT -gt $ios_permission_count ]; then
         IOS_PERMISSION_COUNT=$CURRENT_IOS_BUILDS_PERMISSIONS_COUNT
         envman add --key IOS_PERMISSION_COUNT --value $IOS_PERMISSION_COUNT
