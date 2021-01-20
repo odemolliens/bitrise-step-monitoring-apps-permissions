@@ -86,6 +86,8 @@ if [[ ${check_android} == "yes" ]]; then
         printf "We had: $android_permission_count permissions \n" >> quality_report.txt
         printf "And now: $ANDROID_PERMISSION_COUNT permissions \n" >> quality_report.txt
         printf "You can see list of permissions into list_android_permissions.txt \n\n" >> quality_report.txt
+    else
+        printf "0 alert \n" >> quality_report.txt
     fi
     printf "\n" >> quality_report.txt
 fi
@@ -97,6 +99,8 @@ if [[ ${check_ios} == "yes" ]]; then
         printf "We had: $ios_permission_count permissions \n" >> quality_report.txt
         printf "And now: $IOS_PERMISSION_COUNT permissions \n" >> quality_report.txt
         printf "You can see list of permissions into list_ios_permissions.txt \n\n" >> quality_report.txt
+    else
+        printf "0 alert \n" >> quality_report.txt
     fi
     printf "\n" >> quality_report.txt
 fi
