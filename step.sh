@@ -80,25 +80,25 @@ fi
 printf "\n\n" >> quality_report.txt
 
 if [[ ${check_android} == "yes" ]]; then
-    printf ">>>>>>>>>>  ANDROID  <<<<<<<<<< \n" >> quality_report.txt
+    printf "   >>>>>>>  ANDROID  <<<<<<< \n" >> quality_report.txt
     if [[ ${ANDROID_PERMISSION_COUNT} != "" ]]; then
-    printf "!!! New Android permissions have been added !!!\n" >> quality_report.txt
-    printf "We had: $android_permission_count permissions \n" >> quality_report.txt
-    printf "And now: $ANDROID_PERMISSION_COUNT permissions \n" >> quality_report.txt
-    printf "You can see list of permissions into list_android_permissions.txt \n\n" >> quality_report.txt
+        printf "!!! New Android permissions have been added !!!\n" >> quality_report.txt
+        printf "We had: $android_permission_count permissions \n" >> quality_report.txt
+        printf "And now: $ANDROID_PERMISSION_COUNT permissions \n" >> quality_report.txt
+        printf "You can see list of permissions into list_android_permissions.txt \n\n" >> quality_report.txt
     fi
-    printf "\n\n" >> quality_report.txt
+    printf "\n" >> quality_report.txt
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
-    printf ">>>>>>>>>>  IOS  <<<<<<<<<< \n" >> quality_report.txt
+    printf "   >>>>>>>  IOS  <<<<<<< \n" >> quality_report.txt
     if [[ ${IOS_PERMISSION_COUNT} != "" ]]; then
-    printf "!!! New iOS permissions have been added !!!\n" >> quality_report.txt
-    printf "We had: $ios_permission_count permissions \n" >> quality_report.txt
-    printf "And now: $IOS_PERMISSION_COUNT permissions \n" >> quality_report.txt
-    printf "You can see list of permissions into list_ios_permissions.txt \n\n" >> quality_report.txt
+        printf "!!! New iOS permissions have been added !!!\n" >> quality_report.txt
+        printf "We had: $ios_permission_count permissions \n" >> quality_report.txt
+        printf "And now: $IOS_PERMISSION_COUNT permissions \n" >> quality_report.txt
+        printf "You can see list of permissions into list_ios_permissions.txt \n\n" >> quality_report.txt
     fi
-    printf "\n\n" >> quality_report.txt
+    printf "\n" >> quality_report.txt
 fi
 
 cp quality_report.txt /Users/vagrant/deploy/quality_report.txt || true
