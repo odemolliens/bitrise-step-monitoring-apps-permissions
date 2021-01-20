@@ -8,7 +8,7 @@ if [ -n "$config_file_path" ]; then
     source $config_file_path
 else
     echo "get config from bitrise input"
-fi;
+fi
 
 if [[ ${check_android} == "yes" && ${android_permission_count} == "" ]]; then
     echo "Error: Config keys are not set preperly"
@@ -37,7 +37,7 @@ if [[ ${check_android} == "yes" ]]; then
         gsed -ri 's/<uses-permission android:name="//g' list_android_permissions.txt
         gsed -ri 's/"\/>//g' list_android_permissions.txt
         cp list_android_permissions.txt /Users/vagrant/deploy/list_android_permissions.txt
-    file
+    fi
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
