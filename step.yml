@@ -77,7 +77,7 @@ inputs:
         If not, you can set an empty string.
 
         You can find it on xcode -> General -> Display Name
-      is_expand: false
+      is_expand: true
       is_required: true
   - config_file_path:
     opts:
