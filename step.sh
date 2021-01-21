@@ -55,7 +55,7 @@ if [[ ${check_ios} == "yes" ]]; then
     if [ $CURRENT_IOS_BUILDS_PERMISSIONS_COUNT -gt $ios_permission_count ]; then
         IOS_PERMISSION_COUNT=$CURRENT_IOS_BUILDS_PERMISSIONS_COUNT
         envman add --key IOS_PERMISSION_COUNT --value $IOS_PERMISSION_COUNT
-        grep "UsageDescription</key>" $IOS_PLIST_PATH > list_ios_permissions.txt
+        grep "UsageDescription</key>" "ipa_unzipped/Payload/$ios_app_name.app/Info.plist" > list_ios_permissions.txt
         gsed -ri 's/<key>//g' list_ios_permissions.txt
         gsed -ri 's/<\/key>//g' list_ios_permissions.txt
         cp list_ios_permissions.txt /Users/vagrant/deploy/list_ios_permissions.txt
