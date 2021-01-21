@@ -29,7 +29,7 @@ if [[ ${check_android} == "yes" ]]; then
     fi
 
     # PERMISSION CHECK - count permissions which are into current build's manifest
-    CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT=$(grep -o -i "<uses-permission" apk_decompiled/AndroidManifest.xml | wc -l)
+    CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT=$(echo $(grep -o -i "<uses-permission" apk_decompiled/AndroidManifest.xml | wc -l))
     if [ $CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT -gt $android_permission_count ]; then
         ANDROID_PERMISSION_COUNT=$CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT
         envman add --key ANDROID_PERMISSION_COUNT --value $ANDROID_PERMISSION_COUNT
@@ -51,7 +51,7 @@ if [[ ${check_ios} == "yes" ]]; then
     fi
 
     # PERMISSION CHECK - count permissions which are into current info.plist
-    CURRENT_IOS_BUILDS_PERMISSIONS_COUNT=$(grep -o -i "UsageDescription</key>" ipa_unzipped/Payload/$ios_app_name.app/Info.plist | wc -l)
+    CURRENT_IOS_BUILDS_PERMISSIONS_COUNT=$(echo $(grep -o -i "UsageDescription</key>" ipa_unzipped/Payload/$ios_app_name.app/Info.plist | wc -l))
     if [ $CURRENT_IOS_BUILDS_PERMISSIONS_COUNT -gt $ios_permission_count ]; then
         IOS_PERMISSION_COUNT=$CURRENT_IOS_BUILDS_PERMISSIONS_COUNT
         envman add --key IOS_PERMISSION_COUNT --value $IOS_PERMISSION_COUNT
