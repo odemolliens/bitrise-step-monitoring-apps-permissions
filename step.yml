@@ -16,7 +16,7 @@ description: |
 
   ### Usage
 
-  To give to our step the informations about the expected values, you have:
+  To give to our step the information about the expected values, you have:
   - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](https://github.com/imranMnts/bitrise-step-monitoring-apps-permissions)
   - **OR** set these keys with expected values directly on Bitrise side
     - android_permission_count
@@ -40,7 +40,7 @@ project_type_tags:
 type_tags:
   - utility
 is_requires_admin_user: false
-is_always_run: true
+is_always_run: false
 is_skippable: false
 deps:
   brew:
@@ -52,8 +52,8 @@ inputs:
   - check_android: "yes"
     opts:
       title: "Check Android"
-      summary: "Do you want check android permissions?"
-      description: "To check or not android permissions"
+      summary: "Do you want check Android permissions?"
+      description: "To check or not Android permissions"
       is_expand: true
       is_required: true
       value_options:
@@ -84,7 +84,7 @@ inputs:
       title: "Config file path"
       summary: "Path of the config file"
       description: |
-        The config file where we have some informations like the current android app size eg. to compare with next builds and alert if needed.
+        The config file where we have some information like the current Android app size eg. to compare with next builds and alert if needed.
         If you want use Environment Variables instead of the config file, do not set this key and add variables. (See [README](https://github.com/imranMnts/bitrise-step-monitoring-apps-permissions/blob/master/README.md) to see all needed variables)
       is_expand: false
       is_required: false
@@ -93,7 +93,7 @@ inputs:
       title: "Android permission"
       summary: "Number of permission into your AndroidManifest.xml"
       description: |
-        Set this key if you want to follow up the count of permission used by your android app and be aware when useless permission added to your AndroidManifest.xml
+        Set this key if you want to follow up the count of permission used by your Android app and be aware when useless permission added to your AndroidManifest.xml
 
         To know how many permission you have currently in your app, you can check your APK's manifest to know the exact count.
 
@@ -121,4 +121,4 @@ outputs:
       title: Current build's ios permission count
   - ANDROID_PERMISSION_COUNT:
     opts:
-      title: Current build's android permission count
+      title: Current build's Android permission count
