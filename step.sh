@@ -36,7 +36,7 @@ if [[ ${check_android} == "yes" ]]; then
         grep "<uses-permission" apk_decompiled/AndroidManifest.xml > list_android_permissions.txt
         gsed -ri 's/<uses-permission android:name="//g' list_android_permissions.txt
         gsed -ri 's/"\/>//g' list_android_permissions.txt
-        cp list_android_permissions.txt /Users/vagrant/deploy/list_android_permissions.txt
+        cp list_android_permissions.txt $BITRISE_DEPLOY_DIR/list_android_permissions.txt
     fi
 fi
 
@@ -58,7 +58,7 @@ if [[ ${check_ios} == "yes" ]]; then
         grep "UsageDescription</key>" "ipa_unzipped/Payload/$ios_app_name.app/Info.plist" > list_ios_permissions.txt
         gsed -ri 's/<key>//g' list_ios_permissions.txt
         gsed -ri 's/<\/key>//g' list_ios_permissions.txt
-        cp list_ios_permissions.txt /Users/vagrant/deploy/list_ios_permissions.txt
+        cp list_ios_permissions.txt $BITRISE_DEPLOY_DIR/list_ios_permissions.txt
     fi
 fi
 
@@ -105,7 +105,7 @@ if [[ ${check_ios} == "yes" ]]; then
     printf "\n" >> quality_report.txt
 fi
 
-cp quality_report.txt /Users/vagrant/deploy/quality_report.txt || true
+cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
 
 if [[ ${ANDROID_PERMISSION_COUNT} != "" || ${IOS_PERMISSION_COUNT} != "" ]]; then
     echo "Generate an error due to new permissions"
