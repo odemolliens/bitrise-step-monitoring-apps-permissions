@@ -30,14 +30,13 @@ if [[ ${check_android} == "yes" ]]; then
 
     # PERMISSION CHECK - count permissions which are into current build's manifest
     CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT=$(echo $(grep -o -i "<uses-permission" apk_decompiled/AndroidManifest.xml | wc -l))
-    if [ $CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT -gt $android_permission_count ]; then
-        ANDROID_PERMISSION_COUNT=$CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT
-        envman add --key ANDROID_PERMISSION_COUNT --value $ANDROID_PERMISSION_COUNT
-        grep "<uses-permission" apk_decompiled/AndroidManifest.xml > list_android_permissions.txt
-        gsed -ri 's/<uses-permission android:name="//g' list_android_permissions.txt
-        gsed -ri 's/"\/>//g' list_android_permissions.txt
-        cp list_android_permissions.txt $BITRISE_DEPLOY_DIR/list_android_permissions.txt
-    fi
+    
+    ANDROID_PERMISSION_COUNT=$CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT
+    envman add --key ANDROID_PERMISSION_COUNT --value $ANDROID_PERMISSION_COUNT
+    grep "<uses-permission" apk_decompiled/AndroidManifest.xml > list_android_permissions.txt
+    gsed -ri 's/<uses-permission android:name="//g' list_android_permissions.txt
+    gsed -ri 's/"\/>//g' list_android_permissions.txt
+    cp list_android_permissions.txt $BITRISE_DEPLOY_DIR/list_android_permissions.txt
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
@@ -52,14 +51,13 @@ if [[ ${check_ios} == "yes" ]]; then
 
     # PERMISSION CHECK - count permissions which are into current info.plist
     CURRENT_IOS_BUILDS_PERMISSIONS_COUNT=$(echo $(grep -o -i "UsageDescription</key>" ipa_unzipped/Payload/$ios_app_name.app/Info.plist | wc -l))
-    if [ $CURRENT_IOS_BUILDS_PERMISSIONS_COUNT -gt $ios_permission_count ]; then
-        IOS_PERMISSION_COUNT=$CURRENT_IOS_BUILDS_PERMISSIONS_COUNT
-        envman add --key IOS_PERMISSION_COUNT --value $IOS_PERMISSION_COUNT
-        grep "UsageDescription</key>" "ipa_unzipped/Payload/$ios_app_name.app/Info.plist" > list_ios_permissions.txt
-        gsed -ri 's/<key>//g' list_ios_permissions.txt
-        gsed -ri 's/<\/key>//g' list_ios_permissions.txt
-        cp list_ios_permissions.txt $BITRISE_DEPLOY_DIR/list_ios_permissions.txt
-    fi
+
+    IOS_PERMISSION_COUNT=$CURRENT_IOS_BUILDS_PERMISSIONS_COUNT
+    envman add --key IOS_PERMISSION_COUNT --value $IOS_PERMISSION_COUNT
+    grep "UsageDescription</key>" "ipa_unzipped/Payload/$ios_app_name.app/Info.plist" > list_ios_permissions.txt
+    gsed -ri 's/<key>//g' list_ios_permissions.txt
+    gsed -ri 's/<\/key>//g' list_ios_permissions.txt
+    cp list_ios_permissions.txt $BITRISE_DEPLOY_DIR/list_ios_permissions.txt
 fi
 
 echo "---- REPORT ----"
@@ -71,10 +69,10 @@ fi
 printf ">>>>>>>>>>  CURRENT APP PERMISSIONS  <<<<<<<<<<\n" >> quality_report.txt
 
 if [[ ${check_android} == "yes" ]]; then
-    printf "Android permission count : $android_permission_count \n" >> quality_report.txt
+    printf "Android permission count (from config): $android_permission_count \n" >> quality_report.txt
 fi
 if [[ ${check_android} == "yes" ]]; then
-    printf "iOS permission count : $ios_permission_count \n" >> quality_report.txt
+    printf "iOS permission count (from config): $ios_permission_count \n" >> quality_report.txt
 fi
 
 printf "\n\n" >> quality_report.txt
@@ -83,7 +81,7 @@ if [[ ${check_android} == "yes" ]]; then
     printf "   >>>>>>>  ANDROID  <<<<<<< \n" >> quality_report.txt
     if [[ ${ANDROID_PERMISSION_COUNT} != "" ]]; then
         printf "!!! New Android permissions have been added !!!\n" >> quality_report.txt
-        printf "We had: $android_permission_count permissions \n" >> quality_report.txt
+        printf "You had: $android_permission_count permissions \n" >> quality_report.txt
         printf "And now: $ANDROID_PERMISSION_COUNT permissions \n" >> quality_report.txt
         printf "You can see list of permissions into list_android_permissions.txt \n\n" >> quality_report.txt
     else
@@ -96,7 +94,7 @@ if [[ ${check_ios} == "yes" ]]; then
     printf "   >>>>>>>  IOS  <<<<<<< \n" >> quality_report.txt
     if [[ ${IOS_PERMISSION_COUNT} != "" ]]; then
         printf "!!! New iOS permissions have been added !!!\n" >> quality_report.txt
-        printf "We had: $ios_permission_count permissions \n" >> quality_report.txt
+        printf "You had: $ios_permission_count permissions \n" >> quality_report.txt
         printf "And now: $IOS_PERMISSION_COUNT permissions \n" >> quality_report.txt
         printf "You can see list of permissions into list_ios_permissions.txt \n\n" >> quality_report.txt
     else
@@ -107,8 +105,12 @@ fi
 
 cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
 
-if [[ ${ANDROID_PERMISSION_COUNT} != "" || ${IOS_PERMISSION_COUNT} != "" ]]; then
-    echo "Generate an error due to new permissions"
+if [ $CURRENT_ANDROID_BUILDS_PERMISSIONS_COUNT -gt $android_permission_count ]; then
+    echo "ERROR: New permissions have been added"
+    exit 1
+fi
+if [ $CURRENT_IOS_BUILDS_PERMISSIONS_COUNT -gt $ios_permission_count ]; then
+    echo "ERROR: New permissions have been added"
     exit 1
 fi
 exit 0
