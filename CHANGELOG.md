@@ -1,8 +1,8 @@
-## Changelog (Current version: 1.0.3)
+## Changelog (Current version: 1.0.4)
 
 -----------------
 
-### 1.0.3
+### 1.0.4
 
 - generate a report file in success case too
 
