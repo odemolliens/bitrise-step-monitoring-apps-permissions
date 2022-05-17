@@ -5,7 +5,7 @@ echo "---- CONFIG ----"
 # get current app infos
 if [ -n "$config_file_path" ]; then
     echo "get config from the config file"
-    source $config_file_path
+    source "$config_file_path"
 else
     echo "get config from bitrise input"
 fi
