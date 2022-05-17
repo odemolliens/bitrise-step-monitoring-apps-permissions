@@ -17,7 +17,7 @@ description: |
   ### Usage
 
   To give to our step the information about the expected values, you have:
-  - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](https://github.com/imranMnts/bitrise-step-monitoring-apps-permissions)
+  - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](https://github.com/imranMnts/bitrise-step-monitoring-apps-permissions#config-file-example)
   - **OR** set these keys with expected values directly on Bitrise side
     - android_permission_count
     - ios_permission_count
