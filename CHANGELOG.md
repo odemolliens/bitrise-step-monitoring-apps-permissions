@@ -2,6 +2,10 @@
 
 -----------------
 
+### Unreleased
+
+- output to json file
+
 ### 1.0.4
 
 - generate a report file in success case too

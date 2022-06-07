@@ -70,11 +70,11 @@ JSON_OBJECT='{ }'
 JSON_OBJECT=$(echo "$(jq ". + { "\"$STEP_KEY\"": {} }" <<<"$JSON_OBJECT")")
 
 if [[ ${check_android} == "yes" ]]; then
-    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_permission_count", "value": "$CURRENT_ANDROID_PERMISSION_COUNT", "displayAlert": true } }" <<<"$JSON_OBJECT")")
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_permission_count", "value": "$CURRENT_ANDROID_PERMISSION_COUNT", "displayAlert": true, "artifactName": "list_android_permissions.txt" } }" <<<"$JSON_OBJECT")")
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
-    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "iosApp": { "oldValue": "$ios_permission_count", "value": "$CURRENT_IOS_PERMISSION_COUNT", "displayAlert": true } }" <<<"$JSON_OBJECT")")
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "iosApp": { "oldValue": "$ios_permission_count", "value": "$CURRENT_IOS_PERMISSION_COUNT", "displayAlert": true, "artifactName": "list_ios_permissions.txt" } }" <<<"$JSON_OBJECT")")
 fi
 
 echo "$(jq ". + $JSON_OBJECT" <<< cat quality_report.json)" > quality_report.json
